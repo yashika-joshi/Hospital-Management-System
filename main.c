@@ -137,6 +137,28 @@ void displayPatients(struct Patient* head) {
     }
 }
 
+// Function to search for a patient by name
+void searchPatientByName(struct Patient* head, char name[]) {
+    int found = 0;
+    while (head != NULL) {
+        if (strcmp(head->name, name) == 0) {
+            printf("\n");
+            printf(CENTER_SPACES "Patient Found:\n");
+            printf(CENTER_SPACES "Name     : %s\n", head->name);
+            printf(CENTER_SPACES "Gender   : %s\n", head->gender);
+            printf(CENTER_SPACES "Disease  : %s\n", head->disease);
+            printf(CENTER_SPACES "Age      : %d\n", head->age);
+            printf(CENTER_SPACES "Priority : %d\n", head->priority);
+            found = 1;
+            break;
+        }
+        head = head->next;
+    }
+    if (!found) {
+        printf(CENTER_SPACES "Patient with name '%s' not found.\n", name);
+    }
+}
+
 // Free the entire patient list (memory cleanup)
 void freePatients(struct Patient* head) {
     while (head != NULL) {
@@ -166,6 +188,7 @@ int main() {
         printf(CENTER_SPACES "4. Count Total Patients\n");
         printf(CENTER_SPACES "5. Delete Patient by Name\n");
         printf(CENTER_SPACES "6. Exit\n");
+        printf(CENTER_SPACES "7. Search Patient by Name\n");
         printf("\n\n");
         printf(CENTER_SPACES "--Enter your choice : ");
         scanf("%d", &choice);
@@ -215,6 +238,12 @@ int main() {
                 printf(CENTER_SPACES "Exiting the system. Stay healthy!\n");
                 freePatients(patientQueue);
                 exit(0);
+
+            case 7:
+                printf(CENTER_SPACES "Enter the name of the patient to search: ");
+                scanf(" %[^\n]%*c", name);
+                searchPatientByName(patientQueue, name);
+                break;
 
             default:
                 printf(CENTER_SPACES "Invalid choice. Please try again.\n");
